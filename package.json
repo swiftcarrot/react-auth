@@ -1,6 +1,6 @@
 {
   "name": "@swiftcarrot/react-auth",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Authentication in React and React Native",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
@@ -12,7 +12,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "author": "Wang Zuo <wangzuo@swiftcarrot.com> (https://swiftcarrot.com)",
   "license": "MIT",
   "dependencies": {},
