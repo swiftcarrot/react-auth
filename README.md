@@ -1,5 +1,13 @@
 # @swiftcarrot/react-auth
 
+[![npm](https://img.shields.io/npm/v/@swiftcarrot/react-auth.svg)](https://www.npmjs.com/package/@swiftcarrot/react-auth)
+[![npm](https://img.shields.io/npm/dm/@swiftcarrot/react-auth.svg)](https://www.npmjs.com/package/@swiftcarrot/react-auth)
+[![Build Status](https://travis-ci.org/swiftcarrot/react-auth.svg?branch=master)](https://travis-ci.org/swiftcarrot/react-auth)
+[![codecov](https://codecov.io/gh/swiftcarrot/react-auth/branch/master/graph/badge.svg)](https://codecov.io/gh/swiftcarrot/react-auth)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+
+Authentication in React and React Native
+
 ### Installation
 
 ```sh
@@ -10,7 +18,9 @@ yarn add @swiftcarrot/react-auth
 
 ```javascript
 import React from 'react';
-import { AuthProvider, AuthProctected, useAuth } from '@swiftcarrot/react-auth';
+import { AuthProvider, AuthProtected, useAuth } from '@swiftcarrot/react-auth';
+
+const getCurrentUser = () => fetch('/user');
 
 const App = () => {
   return (
@@ -24,6 +34,6 @@ const App = () => {
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
-  return <div>{currentUser.id}</div>;
+  return <div>{currentUser.name}</div>;
 };
 ```
