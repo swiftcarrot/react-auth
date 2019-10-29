@@ -1,13 +1,23 @@
 # @swiftcarrot/react-auth
 
+### Installation
+
+```sh
+yarn add @swiftcarrot/react-auth
+```
+
+### Usage
+
 ```javascript
 import React from 'react';
-import { AuthProvider, useAuth } from '@swiftcarrot/react-auth';
+import { AuthProvider, AuthProctected, useAuth } from '@swiftcarrot/react-auth';
 
 const App = () => {
   return (
-    <AuthProvider>
-      <Dashboard />
+    <AuthProvider getCurrentUser={getCurrentUser}>
+      <AuthProtected renderLoading={<Loading />} renderLogin={LoginPage}>
+        <Dashboard />
+      </AuthProtected>
     </AuthProvider>
   );
 };
