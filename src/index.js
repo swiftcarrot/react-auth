@@ -13,6 +13,9 @@ export const AuthProvider = ({ children, getCurrentUser }) => {
           if (user) {
             setCurrentUser(user);
             setLoading(false);
+          } else {
+            setCurrentUser(null);
+            setLoading(false);
           }
         })
         .catch(err => {
