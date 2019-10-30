@@ -47,6 +47,7 @@ const Dashboard = () => {
 - afterLoginUser
 - beforeLogoutUser
 - afterLogoutUser
+- renderLoading
 
 #### AuthProtected
 

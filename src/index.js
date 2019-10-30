@@ -8,7 +8,8 @@ export const AuthProvider = ({
   beforeLoginUser,
   afterLoginUser,
   beforeLogoutUser,
-  afterLogoutUser
+  afterLogoutUser,
+  renderLoading
 }) => {
   const [loading, setLoading] = useState(getCurrentUser ? true : false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -59,9 +60,16 @@ export const AuthProvider = ({
     loginUser,
     logoutUser,
     currentUser,
-    setCurrentUser,
-    getCurrentUser
+    setCurrentUser
   };
+
+  if (loading && renderLoading) {
+    return (
+      <AuthContext.Provider value={providerValue}>
+        {React.createElement(renderLoading)}
+      </AuthContext.Provider>
+    );
+  }
 
   return (
     <AuthContext.Provider value={providerValue}>
