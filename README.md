@@ -25,7 +25,7 @@ const getCurrentUser = () => fetch('/user');
 const App = () => {
   return (
     <AuthProvider getCurrentUser={getCurrentUser}>
-      <AuthProtected renderLoading={<Loading />} renderLogin={LoginPage}>
+      <AuthProtected renderLoading={Loading} renderLogin={LoginPage}>
         <Dashboard />
       </AuthProtected>
     </AuthProvider>
@@ -37,3 +37,26 @@ const Dashboard = () => {
   return <div>{currentUser.name}</div>;
 };
 ```
+
+### API
+
+#### AuthProvider
+
+- getCurrentUser
+- beforeLoginUser
+- afterLoginUser
+- beforeLogoutUser
+- afterLogoutUser
+
+#### AuthProtected
+
+- renderLoading
+- renderLogin
+
+#### AuthContext
+
+#### useAuth
+
+### License
+
+MIT
