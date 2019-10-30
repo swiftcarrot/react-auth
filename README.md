@@ -57,6 +57,15 @@ const Dashboard = () => {
 
 #### useAuth
 
+#### Methods
+
+- loading
+- setLoading
+- currentUser
+- setCurrentUser
+- loginuser
+- logoutUser
+
 ### License
 
 MIT
