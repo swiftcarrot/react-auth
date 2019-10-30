@@ -36,7 +36,7 @@ export const AuthProvider = ({
   }, [getCurrentUser]);
 
   function loginUser(user) {
-    beforeLoginUser(user)
+    return beforeLoginUser(user)
       .then(user => {
         setCurrentUser(user);
         return user;
@@ -45,7 +45,7 @@ export const AuthProvider = ({
   }
 
   function logoutUser() {
-    beforeLogoutUser(currentUser)
+    return beforeLogoutUser(currentUser)
       .then(user => {
         setCurrentUser(null);
         return user;
