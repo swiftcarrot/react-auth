@@ -10,7 +10,7 @@ export const AuthProvider = ({
   beforeLogoutUser,
   afterLogoutUser
 }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(getCurrentUser ? true : false);
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -30,23 +30,27 @@ export const AuthProvider = ({
           setCurrentUser(null);
           setLoading(false);
         });
+    } else {
+      setLoading(false);
     }
-  }, []);
+  }, [getCurrentUser]);
 
   function loginUser(user) {
     beforeLoginUser(user)
-      .then(() => {
+      .then(user => {
         setCurrentUser(user);
+        return user;
       })
-      .then(() => afterLoginUser(user));
+      .then(user => afterLoginUser(user));
   }
 
   function logoutUser() {
     beforeLogoutUser(currentUser)
-      .then(() => {
+      .then(user => {
         setCurrentUser(null);
+        return user;
       })
-      .then(() => afterLogoutUser());
+      .then(user => afterLogoutUser(user));
   }
 
   const providerValue = {
@@ -67,10 +71,10 @@ export const AuthProvider = ({
 };
 
 AuthProvider.defaultProps = {
-  beforeLoginUser: Promise.resolve,
-  afterLoginUser: Promise.resolve,
-  beforeLogoutUser: Promise.resolve,
-  afterLogoutUser: Promise.resolve
+  beforeLoginUser: user => Promise.resolve(user),
+  afterLoginUser: user => Promise.resolve(user),
+  beforeLogoutUser: user => Promise.resolve(user),
+  afterLogoutUser: user => Promise.resolve(user)
 };
 
 export const useAuth = () => {
