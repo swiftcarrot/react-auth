@@ -1,6 +1,6 @@
 {
   "name": "@swiftcarrot/react-auth",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Authentication in React and React Native",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
