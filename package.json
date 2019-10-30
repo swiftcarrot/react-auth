@@ -38,5 +38,18 @@
   "peerDependencies": {
     "react": "^16.11.0",
     "react-dom": "^16.11.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swiftcarrot/react-auth.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "authentication"
+  ],
+  "bugs": {
+    "url": "https://github.com/swiftcarrot/react-auth/issues"
+  },
+  "homepage": "https://swiftcarrot.dev/react-auth"
 }
