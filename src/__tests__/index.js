@@ -25,6 +25,20 @@ test('loading', () => {
   ).toMatchInlineSnapshot(`"hello"`);
 });
 
+test('renderLoading', () => {
+  expect(
+    create(
+      <AuthProvider
+        getCurrentUser={() => Promise.resolve({ id: '1' })}
+        renderLoading={Loading}
+      >
+        hello
+        <AuthProtected renderLoading={Loading}>world</AuthProtected>
+      </AuthProvider>
+    ).toJSON()
+  ).toMatchInlineSnapshot(`"loading"`);
+});
+
 test('getCurrentUser', async () => {
   let root;
   let resolve;
