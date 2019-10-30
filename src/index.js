@@ -2,7 +2,14 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({ children, getCurrentUser }) => {
+export const AuthProvider = ({
+  children,
+  getCurrentUser,
+  beforeLoginUser,
+  afterLoginUser,
+  beforeLogoutUser,
+  afterLogoutUser
+}) => {
   const [loading, setLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -26,19 +33,27 @@ export const AuthProvider = ({ children, getCurrentUser }) => {
     }
   }, []);
 
-  function login(user) {
-    setCurrentUser(user);
+  function loginUser(user) {
+    beforeLoginUser(user)
+      .then(() => {
+        setCurrentUser(user);
+      })
+      .then(() => afterLoginUser(user));
   }
 
-  function logout() {
-    setCurrentUser(null);
+  function logoutUser() {
+    beforeLogoutUser(currentUser)
+      .then(() => {
+        setCurrentUser(null);
+      })
+      .then(() => afterLogoutUser());
   }
 
   const providerValue = {
     loading,
     setLoading,
-    login,
-    logout,
+    loginUser,
+    logoutUser,
     currentUser,
     setCurrentUser,
     getCurrentUser
@@ -49,6 +64,13 @@ export const AuthProvider = ({ children, getCurrentUser }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+AuthProvider.defaultProps = {
+  beforeLoginUser: Promise.resolve,
+  afterLoginUser: Promise.resolve,
+  beforeLogoutUser: Promise.resolve,
+  afterLogoutUser: Promise.resolve
 };
 
 export const useAuth = () => {

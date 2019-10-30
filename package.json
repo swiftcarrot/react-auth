@@ -7,7 +7,8 @@
   "sideEffects": false,
   "scripts": {
     "build": "rm -rf dist && NODE_ENV=production rollup -c",
-    "prepublishOnly": "yarn build"
+    "test": "jest --coverage",
+    "prepublishOnly": "yarn test && yarn build"
   },
   "publishConfig": {
     "access": "public"
@@ -17,13 +18,25 @@
   ],
   "author": "Wang Zuo <wangzuo@swiftcarrot.com> (https://swiftcarrot.com)",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@babel/runtime": "^7.6.3"
+  },
   "devDependencies": {
     "@babel/core": "^7.6.2",
+    "babel-jest": "^24.9.0",
     "babel-preset-swiftcarrot": "^1.0.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-test-renderer": "^16.11.0",
     "rollup": "^1.23.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0"
+  },
+  "peerDependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
   }
 }
