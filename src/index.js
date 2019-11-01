@@ -19,8 +19,9 @@ export const AuthProvider = ({
       getCurrentUser()
         .then(user => {
           if (user) {
-            setCurrentUser(user);
-            setLoading(false);
+            return loginUser(user).then(() => {
+              setLoading(false);
+            });
           } else {
             setCurrentUser(null);
             setLoading(false);
