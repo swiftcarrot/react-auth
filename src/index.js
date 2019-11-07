@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useCallback
+} from 'react';
 
 export const AuthContext = createContext();
 
@@ -35,25 +41,28 @@ export const AuthProvider = ({
     } else {
       setLoading(false);
     }
-  }, [getCurrentUser]);
+  }, [getCurrentUser, loginUser]);
 
-  function loginUser(user) {
-    return beforeLoginUser(user)
-      .then(user => {
-        setCurrentUser(user);
-        return user;
-      })
-      .then(user => afterLoginUser(user));
-  }
+  const loginUser = useCallback(
+    user => {
+      return beforeLoginUser(user)
+        .then(user => {
+          setCurrentUser(user);
+          return user;
+        })
+        .then(user => afterLoginUser(user));
+    },
+    [beforeLoginUser, afterLoginUser]
+  );
 
-  function logoutUser() {
+  const logoutUser = useCallback(() => {
     return beforeLogoutUser(currentUser)
       .then(user => {
         setCurrentUser(null);
         return user;
       })
       .then(user => afterLogoutUser(user));
-  }
+  }, [currentUser, beforeLogoutUser, afterLogoutUser]);
 
   const providerValue = {
     loading,
