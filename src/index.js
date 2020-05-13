@@ -1,12 +1,25 @@
 import React, {
   createContext,
-  useState,
   useContext,
   useEffect,
   useCallback,
+  useReducer,
 } from 'react';
 
 export const AuthContext = createContext();
+
+export function reducer(state, action) {
+  switch (action.type) {
+    case 'loading': {
+      return { ...state, loading: action.payload };
+    }
+    case 'currentUser': {
+      return { ...state, currentUser: action.payload };
+    }
+  }
+
+  return state;
+}
 
 export const AuthProvider = ({
   children,
@@ -17,8 +30,19 @@ export const AuthProvider = ({
   afterLogoutUser,
   renderLoading,
 }) => {
-  const [loading, setLoading] = useState(getCurrentUser ? true : false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [state, dispatch] = useReducer(reducer, {
+    loading: getCurrentUser ? true : false,
+    currentUser: null,
+  });
+  const { loading, currentUser } = state;
+
+  function setLoading(payload) {
+    dispatch({ type: 'loading', payload });
+  }
+
+  function setCurrentUser(payload) {
+    dispatch({ type: 'currentUser', payload });
+  }
 
   useEffect(() => {
     if (getCurrentUser) {
