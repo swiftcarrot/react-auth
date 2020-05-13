@@ -1,6 +1,5 @@
 import React, {
   createContext,
-  useState,
   useContext,
   useEffect,
   useCallback,
@@ -9,7 +8,7 @@ import React, {
 
 export const AuthContext = createContext();
 
-function reducer(state, action) {
+export function reducer(state, action) {
   switch (action.type) {
     case 'loading': {
       return { ...state, loading: action.payload };
