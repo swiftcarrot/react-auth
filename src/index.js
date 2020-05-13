@@ -3,7 +3,7 @@ import React, {
   useState,
   useContext,
   useEffect,
-  useCallback
+  useCallback,
 } from 'react';
 
 export const AuthContext = createContext();
@@ -15,7 +15,7 @@ export const AuthProvider = ({
   afterLoginUser,
   beforeLogoutUser,
   afterLogoutUser,
-  renderLoading
+  renderLoading,
 }) => {
   const [loading, setLoading] = useState(getCurrentUser ? true : false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -23,7 +23,7 @@ export const AuthProvider = ({
   useEffect(() => {
     if (getCurrentUser) {
       getCurrentUser()
-        .then(user => {
+        .then((user) => {
           if (user) {
             return loginUser(user).then(() => {
               setLoading(false);
@@ -33,7 +33,7 @@ export const AuthProvider = ({
             setLoading(false);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.warn(err);
           setCurrentUser(null);
           setLoading(false);
@@ -44,24 +44,24 @@ export const AuthProvider = ({
   }, [getCurrentUser, loginUser]);
 
   const loginUser = useCallback(
-    user => {
+    (user) => {
       return beforeLoginUser(user)
-        .then(user => {
+        .then((user) => {
           setCurrentUser(user);
           return user;
         })
-        .then(user => afterLoginUser(user));
+        .then((user) => afterLoginUser(user));
     },
     [beforeLoginUser, afterLoginUser]
   );
 
   const logoutUser = useCallback(() => {
     return beforeLogoutUser(currentUser)
-      .then(user => {
+      .then((user) => {
         setCurrentUser(null);
         return user;
       })
-      .then(user => afterLogoutUser(user));
+      .then((user) => afterLogoutUser(user));
   }, [currentUser, beforeLogoutUser, afterLogoutUser]);
 
   const providerValue = {
@@ -70,7 +70,7 @@ export const AuthProvider = ({
     loginUser,
     logoutUser,
     currentUser,
-    setCurrentUser
+    setCurrentUser,
   };
 
   if (loading && renderLoading) {
@@ -89,10 +89,10 @@ export const AuthProvider = ({
 };
 
 AuthProvider.defaultProps = {
-  beforeLoginUser: user => Promise.resolve(user),
-  afterLoginUser: user => Promise.resolve(user),
-  beforeLogoutUser: user => Promise.resolve(user),
-  afterLogoutUser: user => Promise.resolve(user)
+  beforeLoginUser: (user) => Promise.resolve(user),
+  afterLoginUser: (user) => Promise.resolve(user),
+  beforeLogoutUser: (user) => Promise.resolve(user),
+  afterLogoutUser: (user) => Promise.resolve(user),
 };
 
 export const useAuth = () => {

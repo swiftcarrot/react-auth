@@ -43,7 +43,7 @@ test('getCurrentUser', async () => {
   let root;
   let resolve;
   function getCurrentUser() {
-    return new Promise(_resolve => {
+    return new Promise((_resolve) => {
       resolve = _resolve;
     });
   }
