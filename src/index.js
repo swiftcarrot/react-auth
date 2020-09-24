@@ -16,9 +16,10 @@ export function reducer(state, action) {
     case 'currentUser': {
       return { ...state, currentUser: action.payload };
     }
+    default: {
+      return state;
+    }
   }
-
-  return state;
 }
 
 export const AuthProvider = ({
@@ -44,7 +45,28 @@ export const AuthProvider = ({
     dispatch({ type: 'currentUser', payload });
   }
 
-  useEffect(() => {
+  const loginUser = useCallback(
+    (user) => {
+      return beforeLoginUser(user)
+        .then((user) => {
+          setCurrentUser(user);
+          return user;
+        })
+        .then((user) => afterLoginUser(user));
+    },
+    [beforeLoginUser, afterLoginUser]
+  );
+
+  const logoutUser = useCallback(() => {
+    return beforeLogoutUser(currentUser)
+      .then((user) => {
+        setCurrentUser(null);
+        return user;
+      })
+      .then((user) => afterLogoutUser(user));
+  }, [currentUser, beforeLogoutUser, afterLogoutUser]);
+
+  const refreshUser = useCallback(() => {
     if (getCurrentUser) {
       getCurrentUser()
         .then((user) => {
@@ -67,35 +89,19 @@ export const AuthProvider = ({
     }
   }, [getCurrentUser, loginUser]);
 
-  const loginUser = useCallback(
-    (user) => {
-      return beforeLoginUser(user)
-        .then((user) => {
-          setCurrentUser(user);
-          return user;
-        })
-        .then((user) => afterLoginUser(user));
-    },
-    [beforeLoginUser, afterLoginUser]
-  );
-
-  const logoutUser = useCallback(() => {
-    return beforeLogoutUser(currentUser)
-      .then((user) => {
-        setCurrentUser(null);
-        return user;
-      })
-      .then((user) => afterLogoutUser(user));
-  }, [currentUser, beforeLogoutUser, afterLogoutUser]);
-
   const providerValue = {
     loading,
     setLoading,
     loginUser,
     logoutUser,
+    refreshUser,
     currentUser,
     setCurrentUser,
   };
+
+  useEffect(() => {
+    refreshUser();
+  }, [refreshUser]);
 
   if (loading && renderLoading) {
     return (
