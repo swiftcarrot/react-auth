@@ -64,7 +64,7 @@ const Dashboard = () => {
 - setLoading
 - currentUser
 - setCurrentUser
-- loginuser
+- loginUser
 - logoutUser
 
 ### License
